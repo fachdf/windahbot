@@ -1,4 +1,4 @@
-console.log("SNES Soundtracks booting up");
+console.log("Windahbot booting up.");
 
 const twitterUsername = '@BangWindahBot';
 
@@ -10,23 +10,24 @@ if (process.env.NODE_ENV === "develop") {
 //rules for node-schedule
 var schedule = require("node-schedule");
 
+//schedule utk greetings , tz = gmt+0
 var goodMorning = new schedule.RecurrenceRule();
-goodMorning.hour = 6;
+goodMorning.hour = 23;
 goodMorning.minute = 0;
 
 
 var goodAfternoon = new schedule.RecurrenceRule();
-goodAfternoon.hour = 12;
+goodAfternoon.hour = 5;
 goodAfternoon.minute = 0;
 
 
 var goodEvening = new schedule.RecurrenceRule();
-goodEvening.hour = 15;
+goodEvening.hour = 8;
 goodEvening.minute = 35;
 
 
 var goodNight = new schedule.RecurrenceRule();
-goodNight.hour = 21;
+goodNight.hour = 14;
 goodNight.minute = 0;
 
 
@@ -78,6 +79,7 @@ function pressStart(tweet) {
     let keren = /(keren)/gi;
     let halo = /(halo)/gi;
     let hallo = /(hallo)/gi;
+    let bohong = /(bohong)/gi;
     let regexAbsen = text.match(absen) || [];
     let regexAbsen2 = regexAbsen.length > 0;
 
@@ -87,7 +89,10 @@ function pressStart(tweet) {
     let regexhalo = text.match(halo) || [];
     let regexhalo2 = regexhalo.length > 0;
     let regexhalo3 =  text.match(hallo) || [];
-    let regexhalo4 = regexhalo3.length > 0
+    let regexhalo4 = regexhalo3.length > 0;
+
+    let regexBohong = text.match(bohong) || [];
+    let regexBohong2 = regexBohong.length > 0;
     //this helps with errors, so you can see if the regex matched and if playerTwo is true or false
     
   
@@ -106,8 +111,6 @@ function pressStart(tweet) {
         // Start a reply back to the sender
       var replyText = ("Keren @" + rootUserName + " walaupun gaada yang peduli.");
   
-      // Post that tweet
-      console.log("Jadi reply ke : " + rootTweetId)
       T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
     }
     else if(text.includes(twitterUsername) && (regexhalo2 === true || regexhalo4 === true)) {
@@ -115,9 +118,17 @@ function pressStart(tweet) {
       var replyText = ("Halo @" + rootUserName + " apa kabar?");
   
       // Post that tweet
-      console.log("Jadi reply ke : " + rootTweetId)
+      console.log("Jadi reply ke : " + id)
       T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
     }
+    else if(text.includes(twitterUsername) && regexBohong2 === true ) {
+      // Start a reply back to the sender
+    var replyText = ("Jangan bohong kamu @" + rootUserName);
+
+    // Post that tweet
+    console.log("Jadi reply ke : " + id)
+    T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+   }
     else {
       console.log("uh-uh-uh, they didn't say the magic word.");
     };
