@@ -1,0 +1,29 @@
+{
+  "name": "windahbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.js",
+    "start": "node ./index.js",
+    "develop": "NODE_ENV=develop node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fachdf/windahbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fachdf/windahbot/issues"
+  },
+  "homepage": "https://github.com/fachdf/windahbot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node": "^17.7.2",
+    "node-schedule": "^2.1.0",
+    "touch": "^3.1.0",
+    "twit": "^2.2.11"
+  }
+}
