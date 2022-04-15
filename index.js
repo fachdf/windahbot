@@ -1,34 +1,51 @@
 console.log("SNES Soundtracks booting up");
 
-const twitterUsername = '@_ripari';
+const twitterUsername = '@BangWindahBot';
 
 //making sure npm run develop works
 if (process.env.NODE_ENV === "develop") {
-  require("dotenv").config();
+    require('dotenv').config();
 };
 
 //rules for node-schedule
 var schedule = require("node-schedule");
-var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = 1,
-rule.hour = 10;
-rule.minute = 0;
-rule.tz = "Etc/GMT+4";
+
+var goodMorning = new schedule.RecurrenceRule();
+goodMorning.hour = 6;
+goodMorning.minute = 0;
+
+
+var goodAfternoon = new schedule.RecurrenceRule();
+goodAfternoon.hour = 12;
+goodAfternoon.minute = 0;
+
+
+var goodEvening = new schedule.RecurrenceRule();
+goodEvening.hour = 15;
+goodEvening.minute = 35;
+
+
+var goodNight = new schedule.RecurrenceRule();
+goodNight.hour = 21;
+goodNight.minute = 0;
+
+
 
 //array to pull soundtracks from
-var soundtrackArray = [
-    "https://www.youtube.com/watch?v=85u34SUh05Y", // Legend of Zelda
-    "https://www.youtube.com/watch?v=85u34SUh05Y", // Chrono Trigger
-    "https://www.youtube.com/watch?v=UyNufyV3VCo", // Super Metroid
-    "https://www.youtube.com/watch?v=Y2VJeZDejtc", // Final Fantasy VI
-    "https://www.youtube.com/watch?v=wgUmFPnkoHU", // Super Mario World
-    "https://www.youtube.com/watch?v=-QsysJwzod4", // Super Street Fighter II
-    "https://www.youtube.com/watch?v=oRxgYC5zrV4", // Super Mario World 2: Yoshi's Island
-    "https://www.youtube.com/watch?v=rJJk9Zk2h_U", // Super Mario Kart
-    "https://www.youtube.com/watch?v=byIjMomjWkA", // Star Fox
-    "https://www.youtube.com/watch?v=wpchBo75N68", // Super Mario RPG: Legend of the Seven Stars
+var windahImpression = [
+    "adik adik terkedick kedick.", // Legend of Zelda
+    "adik adik sekalian.",
+    "teman Teman sekalian.",
+    "adik adik.",
+    "teman teman.",
+    "guys",
+    "teman teman, dan para perempuan, dan adik adik diluar sana.",
+    "adik adik, kita absen dulu.",
+    "teman teman, kita absen dulu.",
+    "adik adik diluar sana.",
+    "teman teman adik adik sekalian."
   ];
-var soundtrackArrayLength = soundtrackArray.length;
+var windahImpressionLength = windahImpression.length;
 
 // ... append to bottom of file:
 
@@ -50,33 +67,58 @@ stream.on('tweet', pressStart);
 // ... append to bottom of file:
 
 function pressStart(tweet) {
-
+    console.log(tweet);
     var id = tweet.id_str;
     var text = tweet.text;
     var name = tweet.user.screen_name;
+    var rootTweetId = tweet.in_reply_to_status_id_str;
+    var rootUserName = tweet.in_reply_to_screen_name;
+    console.log("id :" + id + " text: " + text + " name: " + name);
+    let absen = /(absen)/gi;
+    let keren = /(keren)/gi;
+    let halo = /(halo)/gi;
+    let hallo = /(hallo)/gi;
+    let regexAbsen = text.match(absen) || [];
+    let regexAbsen2 = regexAbsen.length > 0;
+
+    let regexKeren = text.match(keren) || [];
+    let regexKeren2 = regexKeren.length > 0;
   
-    let regex = /(please)/gi;
-  
-  
-    let playerOne = text.match(regex) || [];
-    let playerTwo = playerOne.length > 0;
-  
+    let regexhalo = text.match(halo) || [];
+    let regexhalo2 = regexhalo.length > 0;
+    let regexhalo3 =  text.match(hallo) || [];
+    let regexhalo4 = regexhalo3.length > 0
     //this helps with errors, so you can see if the regex matched and if playerTwo is true or false
-    console.log(playerOne);
-    console.log(playerTwo);
+    
   
   
     // checks text of tweet for mention of SNESSoundtracks
-    if (text.includes(twitterUsername) && playerTwo === true) {
+    if (text.includes(twitterUsername) && regexAbsen2 === true) {
   
       // Start a reply back to the sender
-      var soundtrackArrayElement = Math.floor(Math.random() * soundtrackArrayLength);
-      var replyText = ("@" + name + " Here's your soundtrack: " + soundtrackArray[soundtrackArrayElement]);
+      var replyText = ("Ada @" + name);
   
       // Post that tweet
-      T.post('statuses/update', { status: replyText, in_reply_to_status_id: id }, gameOver);
+      T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+        
+    }
+    else if(text.includes(twitterUsername) && regexKeren2 === true) {
+        // Start a reply back to the sender
+      var replyText = ("Keren @" + rootUserName + " walaupun gaada yang peduli.");
   
-    } else {
+      // Post that tweet
+      console.log("Jadi reply ke : " + rootTweetId)
+      T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
+    }
+    else if(text.includes(twitterUsername) && (regexhalo2 === true || regexhalo4 === true)) {
+        // Start a reply back to the sender
+      var replyText = ("Halo @" + rootUserName + " apa kabar?");
+  
+      // Post that tweet
+      console.log("Jadi reply ke : " + rootTweetId)
+      T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+    }
+    else {
       console.log("uh-uh-uh, they didn't say the magic word.");
     };
   
@@ -89,3 +131,70 @@ function pressStart(tweet) {
       }
     };
   }
+
+  function morning() {
+    var windahImpressionElement = Math.floor(Math.random() * windahImpressionLength);
+    var morningText = "Selamat Pagi " + windahImpression[windahImpressionElement];
+    T.post('statuses/update', { status: morningText }, gameOver);
+
+    function gameOver(err, reply) {
+        if (err) {
+          console.log(err.message);
+          console.log("ADUH APASIH GAIS GAJELAS");
+        } else {
+          console.log('Tweeted: ' + reply.text);
+        }
+      }
+  }
+
+  function afternoon() {
+    var windahImpressionElement = Math.floor(Math.random() * windahImpressionLength);
+    var morningText = "Selamat Siang "+ windahImpression[windahImpressionElement];
+    T.post('statuses/update', { status: morningText }, gameOver);
+
+    function gameOver(err, reply) {
+        if (err) {
+          console.log(err.message);
+          console.log("ADUH APASIH GAIS GAJELAS");
+        } else {
+          console.log('Tweeted: ' + reply.text);
+        }
+      }
+  }
+
+  function evening() {
+    var windahImpressionElement = Math.floor(Math.random() * windahImpressionLength);
+    var morningText = "Selamat Sore "+ windahImpression[windahImpressionElement];
+    T.post('statuses/update', { status: morningText }, gameOver);
+
+    function gameOver(err, reply) {
+        if (err) {
+          console.log(err.message);
+          console.log("ADUH APASIH GAIS GAJELAS");
+        } else {
+          console.log('Tweeted: ' + reply.text);
+        }
+      }
+  }
+
+  function night() {
+    var windahImpressionElement = Math.floor(Math.random() * windahImpressionLength);
+    var morningText = "Selamat Malam "+ windahImpression[windahImpressionElement];
+    T.post('statuses/update', { status: morningText }, gameOver);
+
+    function gameOver(err, reply) {
+        if (err) {
+          console.log(err.message);
+          console.log("ADUH APASIH GAIS GAJELAS");
+        } else {
+          console.log('Tweeted: ' + reply.text);
+        }
+      }
+  }
+
+  const goodMorningTweet = schedule.scheduleJob(goodMorning, morning);
+  const goodAfternoonTweet = schedule.scheduleJob(goodAfternoon, afternoon);
+  const goodEveningTweet = schedule.scheduleJob(goodEvening, evening);
+  const goodNightTweet = schedule.scheduleJob(goodNight, night);
+
+  
