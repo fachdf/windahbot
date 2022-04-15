@@ -41,8 +41,8 @@ var windahImpression = [
     "teman teman.",
     "guys",
     "teman teman, dan para perempuan, dan adik adik diluar sana.",
-    "adik adik, kita absen dulu.",
-    "teman teman, kita absen dulu.",
+    "adik adik, kita absen dulu. Yang bilang 'absen' pake emot.",
+    "teman teman, kita absen dulu. Yang bilang 'absen' pake emot.",
     "adik adik diluar sana.",
     "teman teman adik adik sekalian."
   ];
