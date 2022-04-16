@@ -127,7 +127,7 @@ function pressStart(tweet) {
 
     // Post that tweet
     console.log("Jadi reply ke : " + id)
-    T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+    T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
    }
     else {
       console.log("uh-uh-uh, they didn't say the magic word.");
