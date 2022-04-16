@@ -113,7 +113,7 @@ function pressStart(tweet) {
   
       T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
     }
-    else if(text.includes(twitterUsername) && (regexhalo2 === true || regexhalo4 === true)) {
+    else if(text.includes(twitterUsername) && regexhalo2 === true ) {
         // Start a reply back to the sender
       var replyText = ("Halo @" + rootUserName + " apa kabar?");
   
@@ -121,6 +121,14 @@ function pressStart(tweet) {
       console.log("Jadi reply ke : " + id)
       T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
     }
+    else if(text.includes(twitterUsername) && regexhalo4 === true) {
+      // Start a reply back to the sender
+    var replyText = ("Halo @" + rootUserName + " apa kabar?");
+
+    // Post that tweet
+    console.log("Jadi reply ke : " + id)
+    T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+  }
     else if(text.includes(twitterUsername) && regexBohong2 === true ) {
       // Start a reply back to the sender
     var replyText = ("Jangan bohong kamu @" + rootUserName);
