@@ -111,11 +111,13 @@ function pressStart(tweet) {
         // Start a reply back to the sender
       var replyText = ("Keren @" + rootUserName + " walaupun gaada yang peduli.");
   
-      T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
+      if(rootUserName !== null){
+        T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
+      };
     }
     else if(text.includes(twitterUsername) && regexhalo2 === true ) {
         // Start a reply back to the sender
-      var replyText = ("Halo @" + rootUserName + " apa kabar?");
+      var replyText = ("Halo @" + name + " apa kabar?");
   
       // Post that tweet
       console.log("Jadi reply ke : " + id)
@@ -123,7 +125,7 @@ function pressStart(tweet) {
     }
     else if(text.includes(twitterUsername) && regexhalo4 === true) {
       // Start a reply back to the sender
-    var replyText = ("Halo @" + rootUserName + " apa kabar?");
+    var replyText = ("Halo @" + name + " apa kabar?");
 
     // Post that tweet
     console.log("Jadi reply ke : " + id)
@@ -131,11 +133,14 @@ function pressStart(tweet) {
   }
     else if(text.includes(twitterUsername) && regexBohong2 === true ) {
       // Start a reply back to the sender
+    //var replyText = ("Jangan bohong kamu @" + rootUserName + " kata @" + name);
     var replyText = ("Jangan bohong kamu @" + rootUserName);
-
     // Post that tweet
     console.log("Jadi reply ke : " + id)
-    T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
+    if(rootUserName !== null){
+      T.post('statuses/update', { in_reply_to_status_id: rootTweetId , status: replyText  }, gameOver);
+    }
+    
    }
     else {
       console.log("uh-uh-uh, they didn't say the magic word.");
