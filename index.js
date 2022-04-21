@@ -80,9 +80,12 @@ function pressStart(tweet) {
     let halo = /(halo)/gi;
     let hallo = /(hallo)/gi;
     let bohong = /(bohong)/gi;
+    let sebutnamaku = /(sebut namaku)/gi;
     let regexAbsen = text.match(absen) || [];
     let regexAbsen2 = regexAbsen.length > 0;
-
+    let regexSebutNamaku = text.match(sebutnamaku) || [];
+    let regexSebutNamaku2 = regexSebutNamaku.length > 0;
+    
     let regexKeren = text.match(keren) || [];
     let regexKeren2 = regexKeren.length > 0;
   
@@ -142,6 +145,16 @@ function pressStart(tweet) {
     }
     
    }
+   else if (text.includes(twitterUsername) && regexSebutNamaku2 === true) {
+  
+    // Start a reply back to the sender
+    var replyText = ("Ada @" + name);
+
+    // Post that tweet
+    T.post('statuses/update', { in_reply_to_status_id: id , status: replyText  }, gameOver);
+      
+  }
+   
     else {
       console.log("uh-uh-uh, they didn't say the magic word.");
     };
